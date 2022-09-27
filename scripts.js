@@ -23,9 +23,10 @@ for (let i = 0; i < data.length; i += 1) {
 	button.id = data[i].name
 	button.dataset.price = data[i].price
 	button.innerHTML = "Add to Cart"
-	newDiv.appendChild(button)
+	
     price.innerText = data[i].price;
     newDiv.appendChild(price)
+	newDiv.appendChild(button)
 	console.log(img) // Check the console!
 	itemsContainer.appendChild(newDiv)
 }
