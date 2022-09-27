@@ -50,18 +50,26 @@ body {
   flex-direction: column;
  }
 
+ .item h2 {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 0;
+  font-size: 1em;
+ }
+
  .item p {
   font-size: 0.75em;
   padding: 20px;
  }
 
- .item p:nth-child(3){
+ .item p:nth-child(4){
   font-weight: bold;
   text-align: right;
  }
 
- .item p:nth-child(3):before{
-  content: '$ '
+ .item p:nth-child(4):before{
+  content: 'Price: $ ';
+  margin-top: auto;
  }
 
  .item button {

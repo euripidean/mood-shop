@@ -14,6 +14,10 @@ for (let i = 0; i < data.length; i += 1) {
 	// Add the image to the div
 	newDiv.appendChild(img)
 
+	const name = document.createElement('h2');
+	name.innerText = data[i].name.toUpperCase();
+	newDiv.appendChild(name);
+
     const desc = document.createElement('p');
     desc.innerText = data[i].desc;
     newDiv.appendChild(desc)
@@ -30,3 +34,20 @@ for (let i = 0; i < data.length; i += 1) {
 	console.log(img) // Check the console!
 	itemsContainer.appendChild(newDiv)
 }
+
+// Shopping Cart 
+
+const cart = [];
+
+
+function addItem(name, price, quantity) {
+// function goes here
+	const item = {name:name, price:price, quantity:1};
+	cart.push(item);
+}
+
+function showItem() {
+//function goes here
+	console.log(`You have ${cart.length} items in your cart.`)
+}
+
