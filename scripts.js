@@ -39,15 +39,50 @@ for (let i = 0; i < data.length; i += 1) {
 
 const cart = [];
 
-
-function addItem(name, price, quantity) {
-// function goes here
-	const item = {name:name, price:price, quantity:1};
+function addItem(name, price) {
+	for (let i = 0; i < cart.length; i+= 1){
+		if (cart[i].name === name) {
+			cart[i].quantity += 1;
+			return;
+		}
+	}
+	const item = {
+		name,
+		price,
+		quantity: 1,
+	};
 	cart.push(item);
 }
 
-function showItem() {
-//function goes here
-	console.log(`You have ${cart.length} items in your cart.`)
+// Show Items
+function showItems() {
+	const quantity = getQuantity();
+	const total = getTotal();
+	console.log(`You have ${quantity} items in your cart. The total cost of your order is $${total}.`)
+	for (let i = 0; i < cart.length; i+=1) {
+		console.log(`${cart[i].name} - ${cart[i]}.price - x ${cart[i].quantity}`);
+	};
+};
+
+	
+// Get Quantity
+function getQuantity() {
+	let quantity = 0;
+	for (let i =0; i < cart.length; i++) {
+		quantity += cart[i].quantity; 
+	};
+
+	return quantity;
 }
+
+// Get Total
+function getTotal() {
+	let total = 0;
+	for (let i =0; i < cart.length; i++) {
+		total =+ cart[i].price * cart[i].quantity;
+	};
+
+	return total.toFixed(2);
+}
+
 
