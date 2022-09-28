@@ -39,8 +39,10 @@ for (let i = 0; i < data.length; i += 1) {
 
 const cart = [];
 
+// ------------------------------
+// add items to the cart
 function addItem(name, price) {
-	for (let i = 0; i < cart.length; i+= 1){
+	for (let i = 0; i < cart.length; i+= 1) {
 		if (cart[i].name === name) {
 			cart[i].quantity += 1;
 			return;
@@ -54,6 +56,24 @@ function addItem(name, price) {
 	cart.push(item);
 }
 
+// ------------------------------
+// Remove Items from Cart
+function removeItem(name, quantity = 0) {
+	for (let i = 0; i < cart.length; i+= 1) {
+		if(cart[i].name === name) {
+			if (quantity > 0) {
+			cart[i].quantity -= quantity;
+			}
+			if (cart[i].quantity < 1 || quantity === 0) {
+				cart.splice(i,1);
+			}
+			return;
+		}
+	}
+}
+
+
+// ------------------------------
 // Show Items
 function showItems() {
 	const quantity = getQuantity();
@@ -64,7 +84,7 @@ function showItems() {
 	};
 };
 
-	
+// ------------------------------
 // Get Quantity
 function getQuantity() {
 	let quantity = 0;
@@ -75,6 +95,7 @@ function getQuantity() {
 	return quantity;
 }
 
+// ------------------------------
 // Get Total
 function getTotal() {
 	let total = 0;
@@ -85,4 +106,5 @@ function getTotal() {
 	return total.toFixed(2);
 }
 
-
+// ------------------------------
+// ------------------------------
