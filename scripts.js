@@ -1,5 +1,9 @@
 import data from './data.js';
 const itemsContainer = document.querySelector('#items');
+const itemList = document.getElementById('item-list');
+const cartQty = document.getElementById('cart-qty');
+const cartTotal = document.getElementById('cart-total');
+itemList.innerHTML = '';
 
 for (let i = 0; i < data.length; i += 1) {
 	// create a new div element and give it a class name
@@ -78,10 +82,18 @@ function removeItem(name, quantity = 0) {
 function showItems() {
 	const quantity = getQuantity();
 	const total = getTotal();
-	console.log(`You have ${quantity} items in your cart. The total cost of your order is $${total}.`)
+
+	let itemStr = '';
+	cartQty.innerHTML = (`<p>You have ${quantity} items in your cart.</p>`); 
+	cartTotal.innerHTML = (`<p>The total cost of your order is $${total}.</p>`);
+
+
 	for (let i = 0; i < cart.length; i+=1) {
-		console.log(`${cart[i].name} - ${cart[i]}.price - x ${cart[i].quantity}`);
+		const { name, price, quantity } = cart[i];
+		itemStr += `<li>${name} $${price} x ${quantity} = ${total}</li>`
 	};
+
+	itemList.innerHTML = itemStr;
 };
 
 // ------------------------------
@@ -108,3 +120,10 @@ function getTotal() {
 
 // ------------------------------
 // ------------------------------
+console.log(itemList);
+
+addItem('Apple',0.99);
+addItem('Apple',0.99);
+addItem('Banana', 1.98);
+
+showItems();
