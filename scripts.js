@@ -51,11 +51,43 @@ all_items_button.forEach(elt => elt.addEventListener('click', () => {
 const cart = [];
 
 // ------------------------------
+// Handle clicks on list
+
+itemList.onclick = function (e) {
+	if (e.target && e.target.classList.contains('remove')) { 
+		const name = e.target.dataset.name;
+		removeItem(name);
+		} else if 
+		(e.target && e.target.classList.contains('add-one')) {
+			const name = e.target.dataset.name;
+			addItem(name)
+		} else if 
+		(e.target && e.target.classList.contains('remove-one')) {
+			const name = e.target.dataset.name;
+			removeItem(name, 1)
+		}
+}
+
+// ------------------------------
+// Handle update change on list
+
+itemList.onchange = function (e) {
+	if (e.target && e.target.classList.contains('update')) {
+		const name = e.target.dataset.name;
+		const quantity = parseInt(e.target.value);
+		updateCart(name, quantity)
+	}
+
+}
+
+// ------------------------------
 // add items to the cart
+
 function addItem(name, price) {
 	for (let i = 0; i < cart.length; i+= 1) {
 		if (cart[i].name === name) {
 			cart[i].quantity += 1;
+			showItems();
 			return;
 		}
 	}
@@ -78,7 +110,24 @@ function removeItem(name, quantity = 0) {
 			if (cart[i].quantity < 1 || quantity === 0) {
 				cart.splice(i,1);
 			}
+			showItems();
 			return;
+		}
+	}
+}
+
+// ------------------------------
+// Update Items
+
+function updateCart(name, quantity) {
+	for (let i = 0; i < cart.length; i+= 1) {
+		if(cart[i].name === name) {
+			if (quantity < 1) {
+				removeItem(name);
+			}
+		cart[i].quantity = quantity;
+		showItems();
+		return;
 		}
 	}
 }
@@ -86,26 +135,36 @@ function removeItem(name, quantity = 0) {
 
 // ------------------------------
 // Show Items
+
 function showItems() {
 	const quantity = getQuantity();
 	const total = getTotal();
 
 	let itemStr = '';
 	cartQty.innerHTML = (`<p>You have ${quantity} items in your cart.</p>`); 
-	cartTotal.innerHTML = (`<p>The total cost of your order is $${total}.</p>`);
+	cartTotal.innerHTML = (`<p><b>The total cost of your order is <u>$${total}</u>.</b></p>`);
 
-
-	for (let i = 0; i < cart.length; i+=1) {
-		const { name, price, quantity } = cart[i];
-		const subTotal = price * quantity;
-		itemStr += `<li>${name} $${price} x ${quantity} = ${subTotal}</li>`
-	};
+	if (!cart.length) {
+		cartQty.innerHTML = (`You currently have no items in your cart.`)
+	} else {
+		for (let i = 0; i < cart.length; i+=1) {
+			const { name, price, quantity } = cart[i];
+			const subTotal = (price * quantity).toFixed(2);
+			itemStr += `<li>
+			<b>${name}</b> $${price} x ${quantity} = $${subTotal} 
+			<button class="remove" data-name="${name}">Remove</button>
+			<button class="add-one" data-name="${name}"> + </button>
+			<button class="remove-one" data-name="${name}"> - </button>
+			<input class="update" type="number" data-name="${name}" value="${quantity}">
+			</li>`
+		}};
 
 	itemList.innerHTML = itemStr;
 };
 
 // ------------------------------
 // Get Quantity
+
 function getQuantity() {
 	let quantity = 0;
 	for (let i =0; i < cart.length; i++) {
@@ -117,6 +176,7 @@ function getQuantity() {
 
 // ------------------------------
 // Get Total
+
 function getTotal() {
 	let total = 0;
 	for (let i =0; i < cart.length; i++) {
