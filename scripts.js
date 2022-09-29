@@ -39,6 +39,13 @@ for (let i = 0; i < data.length; i += 1) {
 	itemsContainer.appendChild(newDiv)
 }
 
+const all_items_button = Array.from(document.querySelectorAll("button"));
+
+all_items_button.forEach(elt => elt.addEventListener('click', () => {
+	addItem(elt.getAttribute('id'), elt.getAttribute('data-price'))
+	showItems()
+  }))
+
 // Shopping Cart 
 
 const cart = [];
@@ -90,7 +97,8 @@ function showItems() {
 
 	for (let i = 0; i < cart.length; i+=1) {
 		const { name, price, quantity } = cart[i];
-		itemStr += `<li>${name} $${price} x ${quantity} = ${total}</li>`
+		const subTotal = price * quantity;
+		itemStr += `<li>${name} $${price} x ${quantity} = ${subTotal}</li>`
 	};
 
 	itemList.innerHTML = itemStr;
@@ -112,7 +120,7 @@ function getQuantity() {
 function getTotal() {
 	let total = 0;
 	for (let i =0; i < cart.length; i++) {
-		total =+ cart[i].price * cart[i].quantity;
+		total += cart[i].price * cart[i].quantity;
 	};
 
 	return total.toFixed(2);
@@ -120,10 +128,3 @@ function getTotal() {
 
 // ------------------------------
 // ------------------------------
-console.log(itemList);
-
-addItem('Apple',0.99);
-addItem('Apple',0.99);
-addItem('Banana', 1.98);
-
-showItems();
